@@ -47,18 +47,24 @@ from cflib.positioning.motion_commander import MotionCommander
 
 # Change uris according to your setup
 # URIs in a swarm using the same radio must also be on the same channel
-URI1 = 'radio://0/80/2M/E7E7E7E7E7'
-URI2 = 'radio://0/80/2M/E7E7E7E7E8'
+URI1 = 'radio://0/80/2M/E7E7E7E7E9'
+URI2 = 'radio://0/80/2M/E7E7E7E7EA'
+URI3 = 'radio://0/80/2M/E7E7E7E7EB'
+URI4 = 'radio://0/80/2M/E7E7E7E7EC'
+
 
 DEFAULT_HEIGHT = 0.5
 DEFAULT_VELOCITY = 0.2
 pos1 = [0, 0, 0]
 pos2 = [0, 0, 0]
-
+pos3 = [0, 0, 0]
+pos4 = [0, 0, 0]
 # List of URIs
 uris = {
     URI1,
     URI2,
+    URI3,
+    URI4,
 }
 
 
@@ -84,6 +90,16 @@ def position_callback(uri, data):
         pos2[1] = data['stateEstimate.y']
         pos2[2] = data['stateEstimate.z']
         print(f'Uri2 position: x={pos2[0]}, y={pos2[1]}, z={pos2[2]}')
+    elif uri == URI3:
+        pos3[0] = data['stateEstimate.x']
+        pos3[1] = data['stateEstimate.y']
+        pos3[2] = data['stateEstimate.z']
+        print(f'Uri2 position: x={pos3[0]}, y={pos3[1]}, z={pos3[2]}')
+    elif uri == URI3:
+        pos4[0] = data['stateEstimate.x']
+        pos4[1] = data['stateEstimate.y']
+        pos4[2] = data['stateEstimate.z']
+        print(f'Uri2 position: x={pos4[0]}, y={pos4[1]}, z={pos4[2]}')
 
 
 def start_position_printing(scf):
@@ -116,18 +132,32 @@ def async_flight(scf):
                     mc.stop()
 
             elif scf.__dict__['_link_uri'] == URI2:
-                if time.time() - start_time < 2:
-                    mc.start_left(DEFAULT_VELOCITY)
-                elif time.time() - start_time < 4:
-                    mc.start_right(DEFAULT_VELOCITY)
-                elif time.time() - start_time < 6:
-                    mc.start_left(DEFAULT_VELOCITY)
-                elif time.time() - start_time < 8:
-                    mc.start_right(DEFAULT_VELOCITY)
-                elif time.time() - start_time < 10:
-                    mc.start_left(DEFAULT_VELOCITY)
+                if time.time() - start_time < 5:
+                    mc.start_up(DEFAULT_VELOCITY)
+                elif time.time() - start_time < 7:
+                    mc.stop()
                 elif time.time() - start_time < 12:
-                    mc.start_right(DEFAULT_VELOCITY)
+                    mc.start_down(DEFAULT_VELOCITY)
+                else:
+                    mc.stop()
+
+            elif scf.__dict__['_link_uri'] == URI3:
+                if time.time() - start_time < 5:
+                    mc.start_up(DEFAULT_VELOCITY)
+                elif time.time() - start_time < 7:
+                    mc.stop()
+                elif time.time() - start_time < 12:
+                    mc.start_down(DEFAULT_VELOCITY)
+                else:
+                    mc.stop()
+
+            if scf.__dict__['_link_uri'] == URI4:
+                if time.time() - start_time < 5:
+                    mc.start_up(DEFAULT_VELOCITY)
+                elif time.time() - start_time < 7:
+                    mc.stop()
+                elif time.time() - start_time < 12:
+                    mc.start_down(DEFAULT_VELOCITY)
                 else:
                     mc.stop()
 

@@ -42,7 +42,7 @@ from cflib.utils import uri_helper
 from cflib.utils.reset_estimator import reset_estimator
 
 # URI to the Crazyflie to connect to
-uri = uri_helper.uri_from_env(default='radio://0/80/2M/E7E7E7E7EA')
+uri = uri_helper.uri_from_env(default='radio://0/80/2M/E7E7E7E7E9')
 
 # The trajectory to fly
 a = 0.9

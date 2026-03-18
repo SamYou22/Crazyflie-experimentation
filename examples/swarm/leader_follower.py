@@ -51,8 +51,8 @@ from cflib.positioning.motion_commander import MotionCommander
 
 # Change uris according to your setup
 # URIs in a swarm using the same radio must also be on the same channel
-URI1 = 'radio://0/80/2M/E7E7E7E7E7'  # Follower
-URI2 = 'radio://0/80/2M/E7E7E7E7E8'  # Leader
+URI1 = 'radio://0/80/2M/E7E7E7E7EC'  # Follower
+URI2 = 'radio://0/80/2M/E7E7E7E7E9'  # Leader
 
 
 DEFAULT_HEIGHT = 0.75
