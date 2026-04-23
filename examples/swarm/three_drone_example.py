@@ -20,9 +20,9 @@ DRONES = ["cf1", "cf2", "cf3"]
 # Replace these with your actual Crazyflie URIs.
 # If the CF Client connects at 1M reliably, change "2M" -> "1M".
 URI_BY_DRONE = {
-    "cf1": "radio://0/80/2M/E7E7E7E7E7",
-    "cf2": "radio://0/80/2M/E7E7E7E7E8",
-    "cf3": "radio://0/80/2M/E7E7E7E7EA",
+    "cf1": "radio://0/80/2M/E7E7E7E7E1",
+    "cf2": "radio://0/80/2M/E7E7E7E7E2",
+    "cf3": "radio://0/80/2M/E7E7E7E7E3",
 }
 
 # Flight parameters

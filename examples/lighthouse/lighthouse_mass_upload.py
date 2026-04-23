@@ -38,16 +38,22 @@ from cflib.localization import LighthouseConfigWriter
 from cflib.utils import uri_helper
 from cflib.utils.power_switch import PowerSwitch
 
-file_path = 'lighthouse.yaml'  # Add the path to your .yaml file
+file_path = 'crazyflie-lib-python\examples\lighthouse\lighthouse 4-22-26.yaml'  # Add the path to your .yaml file
 
 # Modify the list of Crazyflies according to your setup
 uris = [
-    'radio://0/80/2M/E7E7E7E7E7',
-    'radio://0/80/2M/E7E7E7E7E8',
-    'radio://0/80/2M/E7E7E7E7E9',
-    'radio://0/80/2M/E7E7E7E7EA',
-    'radio://0/80/2M/E7E7E7E7EB',
-    'radio://0/80/2M/E7E7E7E7EC',
+    "radio://0/30/2M/E7E7E7E7E1",
+    "radio://0/30/2M/E7E7E7E7E2",
+    "radio://0/30/2M/E7E7E7E7E3",
+
+    "radio://1/60/2M/E7E7E7E7E4",
+    "radio://1/60/2M/E7E7E7E7E5",
+    "radio://1/60/2M/E7E7E7E7E6",
+
+    "radio://2/90/2M/E7E7E7E7E8",
+    "radio://2/90/2M/E7E7E7E7E9",
+    "radio://2/90/2M/E7E7E7E7EA",
+    "radio://2/90/2M/E7E7E7E7EB", 
 ]
 
 

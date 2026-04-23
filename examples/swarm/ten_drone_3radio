@@ -12,20 +12,24 @@ from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
 # CONFIG
 # --------------------------------------------------
 
-DRONES = ["cf1", "cf2", "cf3", "cf4", "cf5", "cf6"]
+DRONES = ["cf1", "cf2", "cf3", "cf4", "cf5", "cf6", "cf7", "cf8", "cf9", "cf10"]
 
 URI_BY_DRONE = {
-    "cf1": "radio://0/80/2M/E7E7E7E7EC",
-    "cf2": "radio://0/80/2M/E7E7E7E7EB",
-    "cf3": "radio://1/80/2M/E7E7E7E7EA",
-    "cf4": "radio://1/80/2M/E7E7E7E7E9",
-    "cf5": "radio://2/80/2M/E7E7E7E7E8",
-    "cf6": "radio://2/80/2M/E7E7E7E7E7",
+    "cf1": "radio://0/80/2M/E7E7E7E7E1",
+    "cf2": "radio://0/80/2M/E7E7E7E7E2",
+    "cf3": "radio://0/80/2M/E7E7E7E7E3",
+    "cf4": "radio://0/80/2M/E7E7E7E7E4",
+    "cf5": "radio://1/80/2M/E7E7E7E7E5",
+    "cf6": "radio://1/80/2M/E7E7E7E7E6",
+    "cf7": "radio://1/80/2M/E7E7E7E7E8",
+    "cf8": "radio://2/80/2M/E7E7E7E7E9",
+    "cf9": "radio://2/80/2M/E7E7E7E7EA",
+    "cf10": "radio://2/80/2M/E7E7E7E7EB",
 }
 
 MOTOR_POWER = 12000
-SPIN_TIME = 3.0
-INTER_DRONE_DELAY = 2.0
+SPIN_TIME = 1.0
+INTER_DRONE_DELAY = 0.5
 
 # --------------------------------------------------
 # MOTOR CONTROL (CORRECT)

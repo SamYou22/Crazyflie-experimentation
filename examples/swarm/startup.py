@@ -1,42 +1,69 @@
 #!/usr/bin/env python3
 """
-Sequential prop spin test (repeatable, correct for current cflib)
-- 6 drones
-- 3 radios
-- Motors can spin on EVERY run
-- NO takeoff
+Reliable motorPowerSet test with SAFE shutdown
+Motors WILL turn off properly
 """
 
 import time
 import cflib
 from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
 
-DRONES = ["cf1", "cf2", "cf3", "cf4", "cf5", "cf6"]
+# --------------------------------------------------
+# CONFIG
+# --------------------------------------------------
+
+DRONES = ["cf1", "cf2", "cf3", "cf4", "cf5", "cf6", "cf7", "cf8", "cf9", "cf10"]
 
 URI_BY_DRONE = {
-    "cf1": "radio://0/80/2M/E7E7E7E7EC",
-    "cf2": "radio://0/80/2M/E7E7E7E7EB",
-    "cf3": "radio://1/80/2M/E7E7E7E7EA",
-    "cf4": "radio://1/80/2M/E7E7E7E7E9",
-    "cf5": "radio://2/80/2M/E7E7E7E7E8",
-    "cf6": "radio://2/80/2M/E7E7E7E7E7",
+    "cf1": "radio://0/30/2M/E7E7E7E7E1",
+    "cf2": "radio://0/30/2M/E7E7E7E7E2",
+    "cf3": "radio://0/30/2M/E7E7E7E7E3",
+    "cf4": "radio://1/60/2M/E7E7E7E7E4",
+    "cf5": "radio://1/60/2M/E7E7E7E7E5",
+    "cf6": "radio://1/60/2M/E7E7E7E7E6",
+    "cf7": "radio://2/90/2M/E7E7E7E7E8",
+    "cf8": "radio://2/90/2M/E7E7E7E7E9",
+    "cf9": "radio://2/90/2M/E7E7E7E7EA",
+    "cf10": "radio://2/90/2M/E7E7E7E7EB",
 }
 
-START_THRUST = 8000
-SPIN_TIME = 3.0
-INTER_DRONE_DELAY = 2.0
+MOTOR_POWER = 12000
+SPIN_TIME = 1.0
+INTER_DRONE_DELAY = 0.5
 
-def stop_and_disarm(cf):
-    # Stop motors
-    cf.commander.send_setpoint(0, 0, 0, 0)
+# --------------------------------------------------
+# MOTOR CONTROL (CORRECT)
+# --------------------------------------------------
+
+def motor_test_on(cf, power):
+    cf.param.set_value("motorPowerSet.enable", "1")
     time.sleep(0.1)
-    # ✅ Properly clear the supervisor latch
-    cf.commander.send_stop_setpoint()
+
+    cf.param.set_value("motorPowerSet.m1", str(power))
+    cf.param.set_value("motorPowerSet.m2", str(power))
+    cf.param.set_value("motorPowerSet.m3", str(power))
+    cf.param.set_value("motorPowerSet.m4", str(power))
+
+def motor_test_off(cf):
+    # Set all motors to zero TWICE
+    for _ in range(2):
+        cf.param.set_value("motorPowerSet.m1", "0")
+        cf.param.set_value("motorPowerSet.m2", "0")
+        cf.param.set_value("motorPowerSet.m3", "0")
+        cf.param.set_value("motorPowerSet.m4", "0")
+        time.sleep(0.1)
+
+    # Disable motor test mode
+    cf.param.set_value("motorPowerSet.enable", "0")
     time.sleep(0.2)
 
+# --------------------------------------------------
+# MAIN
+# --------------------------------------------------
+
 def main():
-    print("\n=== REPEATABLE PROP SPIN TEST ===")
-    print("⚠️ Props may spin — keep clear\n")
+    print("\n=== MOTOR TEST (SAFE SHUTDOWN) ===")
+    print("⚠️ Props will spin — keep clear.\n")
 
     cflib.crtp.init_drivers(enable_debug_driver=False)
 
@@ -48,15 +75,12 @@ def main():
             with SyncCrazyflie(uri) as scf:
                 cf = scf.cf
 
-                # Clean start
-                stop_and_disarm(cf)
-
-                print(f"{drone}: motors ON")
-                cf.commander.send_setpoint(0, 0, 0, START_THRUST)
+                print(f"{drone}: MOTORS ON")
+                motor_test_on(cf, MOTOR_POWER)
                 time.sleep(SPIN_TIME)
 
-                print(f"{drone}: motors OFF")
-                stop_and_disarm(cf)
+                print(f"{drone}: MOTORS OFF")
+                motor_test_off(cf)
                 print()
 
         except Exception as e:
